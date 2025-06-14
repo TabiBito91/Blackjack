@@ -1,0 +1,130 @@
+import random
+import art
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+your_hand = []
+dealers_hand = []
+
+choice_continue = input("Do you want to play a game of Blackjack? Type 'y' or 'n'").lower()
+
+def calculate_score(hand):
+    score = sum(hand)
+    if 11 in hand and score > 21:
+        hand[hand.index(11)] = 1
+        score = sum(hand)
+    return score
+
+your_score = calculate_score(your_hand)
+dealers_score = calculate_score(dealers_hand)
+
+def deal_cards():
+    return random.choice(cards)
+
+def compare_cards(your_score, dealers_score):
+    # Player busts
+    if your_score > 21:
+        print(f"Your final hand: {your_hand}, final score: {your_score}")
+        print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+        print("You went over! Bust!")
+
+    elif dealers_score > 21:
+        print(f"Your final hand: {your_hand}, final score: {your_score}")
+        print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+        print("The Computer went over! Bust!")
+
+    elif your_score == dealers_score:
+        if dealers_score == 21:
+            print(f"Your final hand: {your_hand}, final score: {your_score}")
+            print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+            print("You lose!")
+
+        else:
+            print(f"Your final hand: {your_hand}, final score: {your_score}")
+            print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+            print("Draw")
+
+    elif your_score > dealers_score:
+        print(f"Your final hand: {your_hand}, final score: {your_score}")
+        print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+        print("You win! Good job!")
+
+    else:
+        print(f"Your final hand: {your_hand}, final score: {your_score}")
+        print(f"Computer's final hand: {dealers_hand}, final score: {dealers_score}")
+        print("You lose!")
+
+
+continue_game = True
+first_round = True
+
+while continue_game:
+    if choice_continue == "y":
+        if first_round:
+            print(art.logo)
+            your_hand += random.sample(cards,2)
+            dealers_hand += random.sample(cards,1)
+            first_round = False
+        else:
+            your_hand.append(deal_cards())
+
+        your_score = calculate_score(your_hand)
+        dealers_score = calculate_score(dealers_hand)
+
+        if your_score > 21:
+            compare_cards(your_score, dealers_score)
+            continue_game = False
+        else:
+            print(f"Your hand: {your_hand}, current score: {your_score}")
+            print(f"Computer's hand: {dealers_hand}, current score: {dealers_score}")
+            choice_continue = input("Type 'y' to get another card, type 'n' to pass")
+
+    elif choice_continue == "n":
+        dealers_hand.append(deal_cards())
+        your_score = calculate_score(your_hand)
+        dealers_score = calculate_score(dealers_hand)
+        compare_cards(your_score,dealers_score)
+        continue_game = False
+
+    else:
+        choice_continue = input("Type 'y' to get another card, type 'n' to pass")
+
+
+print(100 * "\n")
+continue_game = input("Would you like to play again? Please enter 'y' or 'n'").lower
+your_hand = []
+dealers_hand = []
+
+continue_game = True
+first_round = True
+
+while continue_game:
+    if choice_continue == "y":
+        if first_round:
+            print(art.logo)
+            your_hand += random.sample(cards,2)
+            dealers_hand += random.sample(cards,1)
+            first_round = False
+        else:
+            your_hand.append(deal_cards())
+
+        your_score = calculate_score(your_hand)
+        dealers_score = calculate_score(dealers_hand)
+
+        if your_score > 21:
+            compare_cards(your_score, dealers_score)
+            continue_game = False
+        else:
+            print(f"Your hand: {your_hand}, current score: {your_score}")
+            print(f"Computer's hand: {dealers_hand}, current score: {dealers_score}")
+            choice_continue = input("Type 'y' to get another card, type 'n' to pass")
+
+    elif choice_continue == "n":
+        dealers_hand.append(deal_cards())
+        your_score = calculate_score(your_hand)
+        dealers_score = calculate_score(dealers_hand)
+        compare_cards(your_score,dealers_score)
+        continue_game = False
+
+    else:
+        choice_continue = input("Type 'y' to get another card, type 'n' to pass")
